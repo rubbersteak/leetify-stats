@@ -121,8 +121,12 @@ class Player(dict):
         return self.get("totalDamage")
     
     def utility(self):
-        return None
-    
+        if not self.get("name"):
+            return None
+        heDamage = float(self["heFoesDamageAvg"] or 0) * float(self["heThrown"] or 0)
+        molotovDamage = float(self["molotovFoesDamageAvg"] or 0) * float(self["molotovThrown"] or 0)
+        return (heDamage + molotovDamage)
+
     def enemiesFlashed(self):
         return self.get("flashbangHitFoe")
     
