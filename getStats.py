@@ -125,7 +125,7 @@ class Player(dict):
             return None
         heDamage = float(self["heFoesDamageAvg"] or 0) * float(self["heThrown"] or 0)
         molotovDamage = float(self["molotovFoesDamageAvg"] or 0) * float(self["molotovThrown"] or 0)
-        return (heDamage + molotovDamage)
+        return round(heDamage + molotovDamage)
 
     def enemiesFlashed(self):
         return self.get("flashbangHitFoe")
@@ -168,7 +168,9 @@ def main():
 
     gameId = m.group(0)
     game = Match(gameId)
-    with open("out.csv", 'w') as csvfile:
+    file = "out.csv"
+    print(f"Writing file to {file}")
+    with open(file, 'w') as csvfile:
         dataWriter = csv.writer(csvfile)
         dataWriter.writerow(game.getStats())
 
