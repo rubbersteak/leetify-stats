@@ -36,7 +36,8 @@ class Match:
         return self.data["teamScores"][teamNum]
     
     def getMVP(self):
-        mvp = max(self.players.values(), key=lambda x: x.leetify())
+        mvp = max([x for x in self.players.values() if x.leetify() is not None], key=lambda x: x.leetify())
+
         return mvp
 
     def getPlayerStats(self, playerMapping):
