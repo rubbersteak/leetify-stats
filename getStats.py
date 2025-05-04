@@ -104,35 +104,35 @@ class Player(dict):
         return None
 
     def getKills(self):
-        return self.get("totalKills", 0)
+        return self.get("totalKills")
     
     def getAssists(self):
-        return self.get("totalAssists", 0)
+        return self.get("totalAssists")
     
     def getDeaths(self):
-        return self.get("totalDeaths", 0)
+        return self.get("totalDeaths")
     
     def leetify(self):
         if self.get("leetifyRating"):
             return self["leetifyRating"] * 100
-        return 0
+        return None
     
     def totalDamage(self):
-        return self.get("totalDamage", 0)
+        return self.get("totalDamage")
     
     def utility(self):
         if not self.get("name"):
-            return 0
+            return None
         heDamage = float(self["heFoesDamageAvg"] or 0) * float(self["heThrown"] or 0)
         molotovDamage = float(self["molotovFoesDamageAvg"] or 0) * float(self["molotovThrown"] or 0)
         return round(heDamage + molotovDamage)
 
     def enemiesFlashed(self):
-        return self.get("flashbangHitFoe", 0)
+        return self.get("flashbangHitFoe")
     
     def clutchesWon(self):
         if not self.getId():
-            return 0
+            return None
         num = [[(x["steam64Id"] == self["steam64Id"] and x["clutchesWon"] > 0) for x in self.clutchData]][0]
         return sum(num)
     
@@ -165,11 +165,11 @@ def main():
         print("Error: no match id found from given URL.")
         usage()
         exit()
-    
-    file = "out.csv"
-    print(f"Writing file to {file}")
+
     gameId = m.group(0)
     game = Match(gameId)
+    file = "out.csv"
+    print(f"Writing file to {file}")
     with open(file, 'w') as csvfile:
         dataWriter = csv.writer(csvfile)
         dataWriter.writerow(game.getStats())
